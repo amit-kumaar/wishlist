@@ -15,26 +15,23 @@
     </button>
 </form>
 
-<div class="row mt-3">     
-  <div class="col-sm-2">
+<div class="filter">     
     <select class="form-select" 
-    [(ngModel)]="listFilter"
-    (ngModelChange)="filterChanged($event)">
+    [(ngModel)]="listFilter">
       <option value="0">All</option>
       <option value="1">Unfulfilled</option>
       <option value="2">Fulfilled</option>
     </select>
-  </div>
 </div>
 
 <div class="row mt-3">
-  <div class="noItem" *ngIf="items.length===0;else showItem">
+  <div class="noItem" *ngIf="visibleItems.length == 0;else showItem">
     There are no wishes to dispaly.
   </div>
 
   <ng-template #showItem>
   <ul class="wish-list">
-    <li *ngFor="let item of items; index as ii">
+    <li *ngFor="let item of visibleItems; index as ii">
       <div class="form-check">
           <label class="form-check-label">
             <input class="checkbox" 

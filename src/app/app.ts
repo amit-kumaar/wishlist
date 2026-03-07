@@ -4,6 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 
+const filters=[
+  (item:WishItem)=>item,
+  (item:WishItem)=>!item.isComplete,
+  (item:WishItem)=>item.isComplete
+];
+
+
 @Component({
   selector: 'app-root',
   imports: [CommonModule, FormsModule],
@@ -17,20 +24,18 @@ export class App {
     new WishItem('Get coffee', true),
     new WishItem('Find grass that cuts itself')
   ];
-  listFilter:string='0';
+  listFilter:any='0';
   newWishText='';
 
-
-
+  get visibleItems():WishItem[]{
+    return this.items.filter(filters[this.listFilter])
+  };
 
   addNewWish(){
     this.items.push(new WishItem(this.newWishText));
     this.newWishText='';
   }
 
-  filterChanged(value:any){
-    console.log(value)
-  }
   toggleItem(item:WishItem){
     item.isComplete=!item.isComplete;
     console.log(item)
