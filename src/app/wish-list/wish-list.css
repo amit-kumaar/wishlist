@@ -1,7 +1,7 @@
 .wish-list,.noItem,.form-select{
     list-style: none;
-    padding-left: 80px;
+    /* padding-left: 80px; */
 }
-.form-select{
+/* .form-select{
   padding-left: 10px;
-}
+} */

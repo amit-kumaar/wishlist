@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { WishList } from './wish-list/wish-list';
 import { AddWishForm } from './add-wish-form/add-wish-form';
 import { WishFilter } from './wish-filter/wish-filter';
+import events from './../shared/services/EventService'
+
 
 
 
@@ -22,5 +24,10 @@ export class App {
     new WishItem('Find grass that cuts itself')
   ];
   
+  constructor(){
+    events.listen('removeWish',(wish:any)=>{
+      console.log(wish);
+    })
+  }
   filter:any;
 }
