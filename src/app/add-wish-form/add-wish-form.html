@@ -1,0 +1,14 @@
+<form class="wish-form">
+    <input
+     type="text"
+     class="form-control" 
+     [(ngModel)]="newWishText" 
+     name="new-wish-text" 
+     placeholder="Enter your wish..."
+      />
+     <button type="submit"
+             class="wish-btn"
+             (click)="$event.preventDefault(); addNewWish()">
+              Add Wish
+    </button>
+</form>

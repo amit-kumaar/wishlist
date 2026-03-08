@@ -1,51 +1,17 @@
 <div class="container">
 
-<form class="wish-form">
-    <input
-     type="text"
-     class="form-control" 
-     [(ngModel)]="newWishText" 
-     name="new-wish-text" 
-     placeholder="Enter your wish..."
-      />
-     <button type="submit"
-             class="wish-btn"
-             (click)="$event.preventDefault(); addNewWish()">
-              Add Wish
-    </button>
-</form>
+<add-wish-form
+(addWish)="items.push($event)">
+</add-wish-form>
 
-<div class="filter">     
-    <select class="form-select" 
-    [(ngModel)]="listFilter">
-      <option value="0">All</option>
-      <option value="1">Unfulfilled</option>
-      <option value="2">Fulfilled</option>
-    </select>
-</div>
+<wish-filter
+[(filter)]="filter">
+</wish-filter>
 
 <div class="row mt-3">
-  <div class="noItem" *ngIf="visibleItems.length == 0;else showItem">
-    There are no wishes to dispaly.
-  </div>
-
-  <ng-template #showItem>
-  <ul class="wish-list">
-    <li *ngFor="let item of visibleItems; index as ii">
-      <div class="form-check">
-          <label class="form-check-label">
-            <input class="checkbox" 
-                  type="checkbox" 
-                  [checked]="item.isComplete"
-                  [attr.data-index]="ii"
-                  (click)="toggleItem(item)">
-                  {{item.wishText}}
-          </label>
-      </div>
-    </li>
-  </ul>
-  </ng-template>
-
+ <wish-list
+  [wishes]="items.filter(filter)">
+ </wish-list>
   </div>
 
 </div>

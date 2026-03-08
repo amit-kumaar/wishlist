@@ -2,18 +2,15 @@ import { Component, signal } from '@angular/core';
 import { WishItem}  from '../shared/models/wishItems';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WishList } from './wish-list/wish-list';
+import { AddWishForm } from './add-wish-form/add-wish-form';
+import { WishFilter } from './wish-filter/wish-filter';
 
-
-const filters=[
-  (item:WishItem)=>item,
-  (item:WishItem)=>!item.isComplete,
-  (item:WishItem)=>item.isComplete
-];
 
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,WishList,AddWishForm,WishFilter],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -24,20 +21,6 @@ export class App {
     new WishItem('Get coffee', true),
     new WishItem('Find grass that cuts itself')
   ];
-  listFilter:any='0';
-  newWishText='';
-
-  get visibleItems():WishItem[]{
-    return this.items.filter(filters[this.listFilter])
-  };
-
-  addNewWish(){
-    this.items.push(new WishItem(this.newWishText));
-    this.newWishText='';
-  }
-
-  toggleItem(item:WishItem){
-    item.isComplete=!item.isComplete;
-    console.log(item)
-  }
+  
+  filter:any;
 }
