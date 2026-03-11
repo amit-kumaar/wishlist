@@ -1,6 +1,11 @@
+import { Injectable } from "@angular/core";
 import { Observable,Subject } from "rxjs";
 
-class EventService{
+@Injectable({
+    providedIn:'root'
+})
+
+export class EventService{
     private subject=new Subject();
     emit(eventName:string,payload:any){
         this.subject.next({eventName,payload});

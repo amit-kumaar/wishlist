@@ -6,6 +6,7 @@ import { WishList } from './wish-list/wish-list';
 import { AddWishForm } from './add-wish-form/add-wish-form';
 import { WishFilter } from './wish-filter/wish-filter';
 import events from './../shared/services/EventService'
+import { WishSevice } from './service/wish';
 
 
 
@@ -18,16 +19,37 @@ import events from './../shared/services/EventService'
 })
 export class App {
   protected readonly title = signal('wishlist');
-  items:WishItem[]=[
-    new WishItem('To learn angular'),
-    new WishItem('Get coffee', true),
-    new WishItem('Find grass that cuts itself')
-  ];
+  items: WishItem[] = [];
   
-  constructor(){
+  constructor(private wishService:WishSevice){
     events.listen('removeWish',(wish:any)=>{
-      console.log(wish);
+      let index=this.items.indexOf(wish);
+      this.items.splice(index,1);
+      this.wishService.saveWishes(this.items);
     })
   }
-  filter:any;
+
+  addWish(wish: WishItem): void {
+    this.items.push(wish);
+    this.wishService.saveWishes(this.items);
+  }
+
+  ngOnInit():void{
+    this.wishService.getWishes().subscribe((data:any)=>{
+      this.items=data.map((item:any)=>new WishItem(item.wishText, item.isComplete));
+    },
+    (error:any)=>{
+      console.error('Error loading wishes:', error);
+    })
+  }
+
+  filter:any=(item:WishItem)=>item;
+
+  get visibleItems():WishItem[]{
+    return this.items.filter(this.filter);
+  }
+
+  ngOnDestroy():void{
+    this.wishService.saveWishes(this.items);
+  }
 }
